@@ -1,0 +1,52 @@
+--图书管理系统表结构
+
+--创建管理员表manager
+create table manager(
+	u_id int(2) unsigned auto_increment primary key,
+	u_name char(20) not null,
+	u_password varchar(16) not null,
+	u_pno char(11) not null
+);
+
+--创建分类表booktype
+create table booktype(
+	t_id int(3) unsigned auto_increment primary key,
+	t_subid int(3) unsigned not null,
+	t_name varchar(20) not null
+);
+
+--创建图书表book
+create table book(
+	b_id int(6) unsigned auto_increment primary key,
+	t_id int(3) unsigned not null, 
+	b_name varchar(30) not null,
+	b_no int(11) unsigned not null,
+	b_total int(3) unsigned not null,
+	b_newnumber int(3) unsigned not null,
+	b_buildtime int(10) unsigned not null,
+	constraint fk_b_t foreign key(t_id) references booktype(t_id)
+);
+
+--创建读者表reader
+create table reader(
+	r_id int(4) unsigned auto_increment primary key,
+	r_name char(10) not null,
+	r_sex char(1) not null,
+	r_no int(11) unsigned not null,
+	r_pno int(11) unsigned not null,
+	r_pic varchar(40) not null
+); 
+
+--创建图书读者关联表b_r
+create table b_r(
+	id int(7) unsigned auto_increment primary key,
+	r_id int(4) unsigned not null,
+	b_id int(6) unsigned not null,
+	numberfirst int(3) unsigned not null,
+	numberagain int(3) unsigned default 0,
+	b_booktime int(10) unsigned not null,
+	r_booktime int(10) unsigned not null,
+	constraint fk_b_r_r foreign key(r_id) references reader(r_id),
+	constraint fk_b_r_b foreign key(b_id) references book(b_id)
+);
+	
