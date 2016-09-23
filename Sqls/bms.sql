@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50617
 File Encoding         : 65001
 
-Date: 2016-09-22 14:23:44
+Date: 2016-09-23 13:55:46
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -59,15 +59,16 @@ CREATE TABLE `b_r` (
   `id` int(7) unsigned NOT NULL AUTO_INCREMENT COMMENT '图书和读者关联表id号',
   `r_id` int(4) unsigned NOT NULL COMMENT '读者id',
   `b_id` int(6) unsigned NOT NULL COMMENT '图书id',
-  `numberfirst` int(3) unsigned NOT NULL COMMENT '第一次借书数量',
-  `numberagain` int(3) unsigned DEFAULT '0' COMMENT '续借数量',
+  `isback` int(1) NOT NULL DEFAULT '0' COMMENT '是否归还书籍',
+  `numberfirst` int(3) unsigned NOT NULL COMMENT '第一次借书天数',
+  `numberagain` int(3) unsigned NOT NULL DEFAULT '0' COMMENT '续借天数',
   `b_booktime` int(10) unsigned NOT NULL COMMENT '借书时间',
   `r_booktime` int(10) unsigned NOT NULL COMMENT '还书时间',
   PRIMARY KEY (`id`),
   KEY `fk_b_r_r` (`r_id`),
   KEY `fk_b_r_b` (`b_id`),
-  CONSTRAINT `fk_b_r_r` FOREIGN KEY (`r_id`) REFERENCES `reader` (`r_id`),
-  CONSTRAINT `fk_b_r_b` FOREIGN KEY (`b_id`) REFERENCES `book` (`b_id`)
+  CONSTRAINT `fk_b_r_b` FOREIGN KEY (`b_id`) REFERENCES `book` (`b_id`),
+  CONSTRAINT `fk_b_r_r` FOREIGN KEY (`r_id`) REFERENCES `reader` (`r_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
